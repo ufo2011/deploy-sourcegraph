@@ -30,14 +30,14 @@ spec:
       - name: symbols
         env:
         - name: SYMBOLS_CACHE_SIZE_MB
-          value: "100000"
+          value: "10000"
         - name: POD_NAME
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
         - name: CACHE_DIR
           value: /mnt/cache/$(POD_NAME)
-        image: index.docker.io/sourcegraph/symbols:insiders@sha256:1d5abcad54e0c8f467c2cb2b2d5c9ccf96a1d9417361433727c4989a36c77631
+        image: index.docker.io/sourcegraph/symbols:insiders@sha256:e088a52f62620a7b2793c338ccfe079d33859714c6eccad38542635bf802ca82
         terminationMessagePolicy: FallbackToLogsOnError
         livenessProbe:
           httpGet:
@@ -61,17 +61,17 @@ spec:
         resources:
           limits:
             cpu: "2"
-            ephemeral-storage: "8Gi"
+            ephemeral-storage: "12G"
             memory: 2G
           requests:
             cpu: 500m
-            ephemeral-storage: "4Gi"
+            ephemeral-storage: "10G"
             memory: 500M
         volumeMounts:
         - mountPath: /mnt/cache
           name: cache-ssd
       - name: jaeger-agent
-        image: index.docker.io/sourcegraph/jaeger-agent:insiders@sha256:4dddafd63f530aba902525681c4064ea517289aa97ca90713f7886439b827032
+        image: index.docker.io/sourcegraph/jaeger-agent:insiders@sha256:ac5ec46754aa039c48fcd9ba37c945c09dc3626998be4e1eb3c86e966c9bfa6e
         env:
           - name: POD_NAME
             valueFrom:
