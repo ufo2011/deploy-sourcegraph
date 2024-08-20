@@ -7,7 +7,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/sourcegraph/sourcegraph/enterprise/dev/ci/images"
+	"github.com/sourcegraph/sourcegraph/dev/ci/images"
 )
 
 func main() {
@@ -20,10 +20,14 @@ func main() {
 	)
 	args := []string{
 		"run",
-		"github.com/slimsag/update-docker-tags",
+		"github.com/sourcegraph/update-docker-tags",
 	}
-	for _, image := range images.SourcegraphDockerImages {
-		args = append(args, fmt.Sprintf("-enforce=sourcegraph/%s=%s", image, constraint))
+	for _, image := range images.DeploySourcegraphDockerImages {
+		if constraint != "" {
+			args = append(args, fmt.Sprintf("-enforce=sourcegraph/%s=%s", image, constraint))
+		} else {
+			args = append(args, fmt.Sprintf("-update=sourcegraph/%s", image))
+		}
 	}
 	args = append(args, dir)
 	log.Println(strings.Join(args, " "))

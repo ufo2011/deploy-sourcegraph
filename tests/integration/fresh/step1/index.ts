@@ -18,8 +18,20 @@ const storageClass = new k8s.storage.v1.StorageClass(
         },
         provisioner: 'kubernetes.io/gce-pd',
 
+        reclaimPolicy: 'Delete',
+
         parameters: {
             type: 'pd-ssd',
+        },
+    },
+    { provider: k8sProvider }
+)
+
+const nameSpace = new k8s.core.v1.Namespace(
+    'sourcegraph-namespace',
+    {
+        metadata: {
+            name: 'ns-sourcegraph',
         },
     },
     { provider: k8sProvider }
@@ -39,7 +51,7 @@ baseFiles.then(
             },
             {
                 providers: { kubernetes: k8sProvider },
-                dependsOn: [storageClass],
+                dependsOn: [storageClass, nameSpace],
             }
         )
 )

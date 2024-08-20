@@ -26,7 +26,7 @@ spec:
       serviceAccountName: cadvisor
       containers:
       - name: cadvisor
-        image: index.docker.io/sourcegraph/cadvisor:insiders@sha256:186c4279c4cec2d2e228f1fe9e5dbd5297539df0762b502e916bfc201b7be731
+        image: index.docker.io/sourcegraph/cadvisor:5.6.185@sha256:91fef9d8f036927f6218fb507be07cab003e9412ff8aa081416ebe0e9cd77b7b
         args:
         # Kubernetes-specific flags below (other flags are baked into the Docker image)
         #
@@ -62,6 +62,8 @@ spec:
         - name: http
           containerPort: 48080
           protocol: TCP
+        securityContext:
+          privileged: null
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 30
       volumes:

@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-bases:
+resources:
   - ../bases/deployments
   - ../bases/pvcs
 patchesJson6902:
@@ -49,7 +49,7 @@ patchesJson6902:
     path: replace-storageclass-name-pvc.yaml
   - target:
       kind: PersistentVolumeClaim
-      name: minio
+      name: blobstore
       version: v1
     path: replace-storageclass-name-pvc.yaml
   - target:

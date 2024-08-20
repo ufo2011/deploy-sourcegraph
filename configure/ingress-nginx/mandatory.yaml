@@ -5,9 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
 ---
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -16,7 +14,6 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -26,7 +23,6 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
 ---
 kind: ConfigMap
 apiVersion: v1
@@ -36,7 +32,6 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -46,9 +41,8 @@ metadata:
   labels:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
-
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: nginx-ingress-clusterrole
@@ -104,9 +98,8 @@ rules:
       - ingresses/status
     verbs:
       - update
-
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
   name: nginx-ingress-role
@@ -149,9 +142,8 @@ rules:
       - endpoints
     verbs:
       - get
-
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: nginx-ingress-role-nisa-binding
@@ -167,9 +159,8 @@ subjects:
   - kind: ServiceAccount
     name: nginx-ingress-serviceaccount
     namespace: ingress-nginx
-
 ---
-apiVersion: rbac.authorization.k8s.io/v1beta1
+apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: nginx-ingress-clusterrole-nisa-binding
@@ -184,9 +175,7 @@ subjects:
   - kind: ServiceAccount
     name: nginx-ingress-serviceaccount
     namespace: ingress-nginx
-
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -217,7 +206,7 @@ spec:
         kubernetes.io/os: linux
       containers:
         - name: nginx-ingress-controller
-          image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.29.0@sha256:603a8f4d4c88e83c58d07d20de03a15ed1892bf261d699b3f85ffd892b01bba0
+          image: k8s.gcr.io/ingress-nginx/controller:v1.2.0@sha256:d8196e3bc1e72547c5dec66d6556c0ff92a23f6d0919b206be170bc90d5f9185
           terminationMessagePolicy: FallbackToLogsOnError
           args:
             - /nginx-ingress-controller
@@ -275,9 +264,7 @@ spec:
               exec:
                 command:
                   - /wait-shutdown
-
 ---
-
 apiVersion: v1
 kind: LimitRange
 metadata:

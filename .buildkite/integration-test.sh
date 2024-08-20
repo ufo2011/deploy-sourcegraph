@@ -16,13 +16,15 @@ export BUILD_CREATOR
 GENERATED_BASE=$(mktemp -d)
 export GENERATED_BASE
 
+export TEST_K8S_VERSION=$1
+
 cleanup() {
   echo "--- Cleaning up test artifacts"
   rm -rf "${GENERATED_BASE}"
 }
 trap cleanup EXIT
 
-"${DEPLOY_SOURCEGRAPH_ROOT}"/overlay-generate-cluster.sh non-root-create-cluster "${GENERATED_BASE}"
+"${DEPLOY_SOURCEGRAPH_ROOT}"/overlay-generate-cluster.sh non-privileged-create-cluster "${GENERATED_BASE}"
 
 TEST_ARGS=("test" "-timeout" "25m")
 

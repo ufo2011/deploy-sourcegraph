@@ -1,7 +1,7 @@
 # Prometheus
 
 [Prometheus](https://prometheus.io/) is an open-source application monitoring system and time series database.
- It is commonly used to track key performance metrics over time, such as the following:
+It is commonly used to track key performance metrics over time, such as the following:
 
 - QPS
 - Application requests by URL route name
@@ -11,7 +11,11 @@
 
 <img src="../../docs/images/prometheus.png" />
 
-A Prometheus instance is part of the default Sourcegraph cluster installation. 
+A Prometheus instance is part of the default Sourcegraph cluster installation.
+
+## Developer notes
+
+Ensure changes here are also made in all namespaces that change the Prometheus ConfigMap: [`file:overlays AND file:prometheus.ConfigMap.yaml`](https://sourcegraph.com/search?q=context:global+repo:%5Egithub%5C.com/sourcegraph/deploy-sourcegraph%24+file:overlays+AND+file:prometheus.ConfigMap.yaml+&patternType=literal)
 
 ## Optional Steps
 
@@ -98,8 +102,8 @@ ingress rules. On most infrastructure providers, the steps are roughly the follo
 Some customers may want to make the Prometheus API endpoint accessible to other services like the
 following:
 
-- An analytics visualization tool like Grafana 
-(note: an instance of Grafana is part of the default Sourcegraph cluster installation)
+- An analytics visualization tool like Grafana
+  (note: an instance of Grafana is part of the default Sourcegraph cluster installation)
 - An metrics ingestion pipeline
 
 To expose the Prometheus API to such a service, follow the steps to expose Prometheus via Kubernetes
